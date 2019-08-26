@@ -24,10 +24,10 @@ import com.palantir.tritium.event.metrics.annotations.MetricGroup;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("NullAway") // implicitly testing null handling
-public class AnnotationHelperTest {
+final class AnnotationHelperTest {
 
     @MetricGroup("DEFAULT")
-    public interface TestSuperInterface {
+    interface TestSuperInterface {
 
         @MetricGroup("ONE")
         void method();
@@ -51,7 +51,7 @@ public class AnnotationHelperTest {
     }
 
     @Test
-    public void testParentInterfaceAnnotations() throws NoSuchMethodException {
+    void testParentInterfaceAnnotations() throws NoSuchMethodException {
         TestSuperInterface impl = mock(TestSuperInterface.class);
 
         //discovery annotation on parent class
@@ -109,7 +109,7 @@ public class AnnotationHelperTest {
     }
 
     @Test
-    public void testMethodSignatureEquality() throws NoSuchMethodException {
+    void testMethodSignatureEquality() throws NoSuchMethodException {
         assertThat(AnnotationHelper.MethodSignature.of(
                 TestSuperInterface.class.getMethod("method")))
                 .isEqualTo(AnnotationHelper.MethodSignature.of("method"));
@@ -120,7 +120,7 @@ public class AnnotationHelperTest {
     }
 
     @Test
-    public void testVargVariants() throws NoSuchMethodException {
+    void testVargVariants() throws NoSuchMethodException {
         TestSuperInterface impl = mock(TestSuperInterface.class);
         AnnotationHelper.MethodSignature vargSig = AnnotationHelper.MethodSignature.of("vargMethod", String[].class);
 
@@ -137,7 +137,7 @@ public class AnnotationHelperTest {
     }
 
     @Test
-    public void testOverrideInterface() {
+    void testOverrideInterface() {
         TestOverrideInterface impl = mock(TestOverrideInterface.class);
 
         //validate signature matching with vargs

@@ -24,10 +24,10 @@ import java.util.Deque;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import org.junit.jupiter.api.Test;
 
-public class JavaTracingTracerTest {
+final class JavaTracingTracerTest {
 
     @Test
-    public void trace() {
+    void trace() {
         Deque<Span> observedSpans = new ConcurrentLinkedDeque<>();
         com.palantir.tracing.Tracer.setSampler(AlwaysSampler.INSTANCE);
         com.palantir.tracing.Tracer.subscribe("test", observedSpans::add);

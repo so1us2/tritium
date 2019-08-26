@@ -32,7 +32,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 final class TaggedMetricsServiceInvocationEventHandlerTest {
 
-    public static final class TestImplementation {
+    static final class TestImplementation {
 
         @SuppressWarnings("unused")
         public String doFoo() {

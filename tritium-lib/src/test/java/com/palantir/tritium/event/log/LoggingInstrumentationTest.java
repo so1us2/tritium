@@ -31,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.impl.SimpleLogger;
 
-public class LoggingInstrumentationTest {
+final class LoggingInstrumentationTest {
 
     private static final String LOG_KEY = SimpleLogger.LOG_KEY_PREFIX + "com.palantir";
 
@@ -39,12 +39,12 @@ public class LoggingInstrumentationTest {
     private String previousLogLevel = null;
 
     @BeforeEach
-    public void before() {
+    void before() {
         previousLogLevel = System.setProperty(LOG_KEY, LoggingLevel.TRACE.name());
     }
 
     @AfterEach
-    public void after() {
+    void after() {
         if (previousLogLevel == null) {
             System.clearProperty(LOG_KEY);
         } else {
@@ -53,14 +53,14 @@ public class LoggingInstrumentationTest {
     }
 
     @Test
-    public void testLogging() {
+    void testLogging() {
         for (LoggingLevel loggingLevel : LoggingLevel.values()) {
             testLoggingAtLevel(loggingLevel);
         }
     }
 
     @Test
-    public void testNoLogging() {
+    void testNoLogging() {
         TestImplementation delegate = new TestImplementation();
         Logger logger = getLogger();
         @SuppressWarnings("deprecation") // explicitly testing
@@ -73,7 +73,7 @@ public class LoggingInstrumentationTest {
     }
 
     @Test
-    public void testErrorLogging() {
+    void testErrorLogging() {
         TestImplementation delegate = new TestImplementation() {
             @Override
             public String test() {

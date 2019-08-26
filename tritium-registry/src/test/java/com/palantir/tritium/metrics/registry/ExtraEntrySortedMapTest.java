@@ -32,7 +32,7 @@ import net.jqwik.api.constraints.IntRange;
 import net.jqwik.api.constraints.Size;
 
 @SuppressWarnings("JdkObsolete")
-class ExtraEntrySortedMapTest {
+final class ExtraEntrySortedMapTest {
 
     @Property(tries = 10_000, seed = "3619154246571270871")
     void check_ExtraEntrySortedMap_has_the_same_behaviour_as_an_ImmutableSortedMap_with_an_extra_entry(

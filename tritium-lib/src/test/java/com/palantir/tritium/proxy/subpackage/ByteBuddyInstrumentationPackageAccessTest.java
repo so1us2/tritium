@@ -23,7 +23,7 @@ import com.palantir.tritium.proxy.Instrumentation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ByteBuddyInstrumentationPackageAccessTest {
+final class ByteBuddyInstrumentationPackageAccessTest {
 
     @BeforeEach
     void before() {

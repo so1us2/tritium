@@ -54,6 +54,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.SortedMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import javax.annotation.Nonnull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -263,7 +264,7 @@ final class MetricRegistriesTest {
                 .recordStats()
                 .build(new CacheLoader<Integer, String>() {
                     @Override
-                    public String load(Integer key) {
+                    public String load(@Nonnull Integer key) {
                         return String.valueOf(key);
                     }
                 });
@@ -391,7 +392,6 @@ final class MetricRegistriesTest {
 
     @Test
     void testNullPrefixMetricsPrefixedBy() {
-        //noinspection ResultOfMethodCallIgnored
         assertThatThrownBy(() ->
                 MetricRegistries.metricsPrefixedBy(null))
                 .isInstanceOf(NullPointerException.class);

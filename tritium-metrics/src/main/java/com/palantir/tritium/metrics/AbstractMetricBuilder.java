@@ -25,7 +25,7 @@ abstract class AbstractMetricBuilder<T extends Metric> implements MetricBuilder<
 
     private final Class<T> metricType;
 
-    protected AbstractMetricBuilder(Class<T> metricType) {
+    AbstractMetricBuilder(Class<T> metricType) {
         this.metricType = checkNotNull(metricType, "metricType");
     }
 

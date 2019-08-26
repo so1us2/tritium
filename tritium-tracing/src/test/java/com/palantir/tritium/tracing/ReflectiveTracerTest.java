@@ -25,10 +25,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("NullAway") // mock injection
-public class ReflectiveTracerTest {
+final class ReflectiveTracerTest {
 
     @Test
-    public void createValid() throws Exception {
+    void createValid() throws Exception {
         Method startMethod = MockTracer.class.getMethod("start", String.class);
         Method completeMethod = MockTracer.class.getMethod("stop");
         ReflectiveTracer reflectiveTracer = new ReflectiveTracer(startMethod, completeMethod);
@@ -37,7 +37,7 @@ public class ReflectiveTracerTest {
     }
 
     @Test
-    public void createInvalid() throws Exception {
+    void createInvalid() throws Exception {
         Method validStartMethod = MockTracer.class.getMethod("start", String.class);
         Method validCompleteMethod = MockTracer.class.getMethod("stop");
         Method invalidStartMethod = MockTracer.class.getMethod("badStart", Integer.class);
@@ -63,7 +63,8 @@ public class ReflectiveTracerTest {
                 .withMessageContaining("argumentTypes=[java.lang.Integer]");
     }
 
-    public static final class MockTracer {
+    @SuppressWarnings("WeakerAccess")
+    static final class MockTracer {
         private MockTracer() {}
 
         public static void start(String _value) {}

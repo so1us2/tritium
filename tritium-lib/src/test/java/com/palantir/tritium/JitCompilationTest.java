@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import org.slf4j.impl.TestLogs;
 
-public final class JitCompilationTest {
+final class JitCompilationTest {
 
     private static final long COUNT = 5_000_000L;
 

@@ -160,7 +160,7 @@ final class CompositeInvocationEventHandlerTest {
 
     @Test
     void testPreInvocationThrowingHandler() throws Exception {
-        @SuppressWarnings("unchecked") List<InvocationEventHandler<InvocationContext>> handlers =
+        List<InvocationEventHandler<InvocationContext>> handlers =
                 Arrays.asList(NoOpInvocationEventHandler.INSTANCE, createThrowingHandler(true));
         InvocationEventHandler<InvocationContext> compositeHandler = CompositeInvocationEventHandler.of(handlers);
         assertThat(compositeHandler).isInstanceOf(CompositeInvocationEventHandler.class);
@@ -171,7 +171,7 @@ final class CompositeInvocationEventHandlerTest {
 
     @Test
     void testThrowingOnSuccess() throws Exception {
-        @SuppressWarnings("unchecked") List<InvocationEventHandler<InvocationContext>> handlers =
+        List<InvocationEventHandler<InvocationContext>> handlers =
                 Arrays.asList(NoOpInvocationEventHandler.INSTANCE, createThrowingHandler(true));
         InvocationEventHandler<InvocationContext> compositeHandler = CompositeInvocationEventHandler.of(handlers);
         assertThat(compositeHandler).isInstanceOf(CompositeInvocationEventHandler.class);
@@ -184,7 +184,7 @@ final class CompositeInvocationEventHandlerTest {
     @Test
     void testThrowingOnFailure() throws Exception {
         InvocationEventHandler<InvocationContext> throwingHandler = createThrowingHandler(true);
-        @SuppressWarnings("unchecked") List<InvocationEventHandler<InvocationContext>> handlers =
+        List<InvocationEventHandler<InvocationContext>> handlers =
                 Arrays.asList(NoOpInvocationEventHandler.INSTANCE, throwingHandler);
         InvocationEventHandler<InvocationContext> compositeHandler = CompositeInvocationEventHandler.of(handlers);
         assertThat(compositeHandler).isInstanceOf(CompositeInvocationEventHandler.class);

@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
 import org.slf4j.impl.SimpleLogger;
 
-public class LoggingInvocationEventHandlerTest {
+final class LoggingInvocationEventHandlerTest {
 
     private static final String LOG_KEY = SimpleLogger.LOG_KEY_PREFIX + "com.palantir";
 
@@ -44,12 +44,12 @@ public class LoggingInvocationEventHandlerTest {
     private String previousLogLevel = null;
 
     @BeforeEach
-    public void before() {
+    void before() {
         previousLogLevel = System.setProperty(LOG_KEY, LoggingLevel.TRACE.name());
     }
 
     @AfterEach
-    public void after() {
+    void after() {
         if (previousLogLevel == null) {
             System.clearProperty(LOG_KEY);
         } else {
@@ -58,14 +58,14 @@ public class LoggingInvocationEventHandlerTest {
     }
 
     @Test
-    public void testNullContextOnSuccess() {
+    void testNullContextOnSuccess() {
         LoggingInvocationEventHandler handler = new LoggingInvocationEventHandler(
                 getLogger(), LoggingLevel.INFO);
         handler.onSuccess(null, "result");
     }
 
     @Test
-    public void testNullContextOnFailure() {
+    void testNullContextOnFailure() {
         LoggingInvocationEventHandler handler = new LoggingInvocationEventHandler(
                 getLogger(), LoggingLevel.INFO);
         handler.onFailure(null, new RuntimeException("cause"));
@@ -73,7 +73,7 @@ public class LoggingInvocationEventHandlerTest {
 
     @Test
     @SuppressWarnings("checkstyle:illegalthrows")
-    public void testLoggingOnSuccess() throws Throwable {
+    void testLoggingOnSuccess() throws Throwable {
         LoggingInvocationEventHandler handler = new LoggingInvocationEventHandler(
                 getLogger(), LoggingLevel.INFO);
 
@@ -84,7 +84,7 @@ public class LoggingInvocationEventHandlerTest {
     @Test
     //CHECKSTYLE IGNORE IllegalThrows
     @SuppressWarnings("checkstyle:illegalthrows")
-    public void testLoggingOnFailure() throws Throwable {
+    void testLoggingOnFailure() throws Throwable {
         LoggingInvocationEventHandler handler = new LoggingInvocationEventHandler(
                 getLogger(), LoggingLevel.INFO);
 
@@ -99,20 +99,20 @@ public class LoggingInvocationEventHandlerTest {
 
     @Test
     @SuppressWarnings("NullAway") // explicitly testing null handling
-    public void testNullIsEnabled() {
+    void testNullIsEnabled() {
         assertThatExceptionOfType(NullPointerException.class).isThrownBy(() ->
                 LoggingInvocationEventHandler.isEnabled(getLogger(), null));
     }
 
     @Test
     @SuppressWarnings("NullAway") // explicitly testing null handling
-    public void testNullLevel() {
+    void testNullLevel() {
         assertThatExceptionOfType(NullPointerException.class).isThrownBy(() ->
                 new LoggingInvocationEventHandler(getLogger(), null));
     }
 
     @Test
-    public void testGenerateMessagePattern() {
+    void testGenerateMessagePattern() {
         assertThat(LoggingInvocationEventHandler.generateMessagePattern(0)).isEqualTo("{}.{}() took {}ms");
         assertThat(LoggingInvocationEventHandler.generateMessagePattern(1)).isEqualTo("{}.{}({}) took {}ms");
         assertThat(LoggingInvocationEventHandler.generateMessagePattern(2)).isEqualTo("{}.{}({}, {}) took {}ms");
@@ -121,7 +121,7 @@ public class LoggingInvocationEventHandlerTest {
 
     @Test
     @SuppressWarnings("checkstyle:illegalthrows")
-    public void testGenerateMessage() throws Throwable {
+    void testGenerateMessage() throws Throwable {
         Method method = TestInterface.class.getDeclaredMethod("multiArgumentMethod",
                 String.class, int.class, Collection.class);
         long durationNanoseconds = 1234567L;
@@ -140,7 +140,7 @@ public class LoggingInvocationEventHandlerTest {
 
     @Test
     @SuppressWarnings("checkstyle:illegalthrows")
-    public void testGenerateCollectionsMessage() throws Throwable {
+    void testGenerateCollectionsMessage() throws Throwable {
         Method method = TestInterface.class.getDeclaredMethod("bulk", Set.class);
         long durationNanoseconds = 1234567L;
         LoggingLevel level = LoggingLevel.TRACE;
@@ -154,14 +154,14 @@ public class LoggingInvocationEventHandlerTest {
     }
 
     @Test
-    public void testGetMessagePattern() {
+    void testGetMessagePattern() {
         for (int i = 0; i < 20; i++) {
             assertThat(LoggingInvocationEventHandler.getMessagePattern(new Object[i])).contains("{}");
         }
     }
 
     @Test
-    public void testBackwardCompatibility() {
+    void testBackwardCompatibility() {
         assertThat(LoggingInvocationEventHandler.LOG_DURATIONS_GREATER_THAN_1_MICROSECOND)
                 .isInstanceOf(com.palantir.tritium.api.functions.LongPredicate.class);
 

@@ -16,7 +16,7 @@
 
 package com.palantir.tritium.proxy;
 
-class ByteBuddyInstrumentationTest extends InstrumentationTest {
+final class ByteBuddyInstrumentationTest extends InstrumentationTest {
     @Override
     boolean useByteBuddy() {
         return true;

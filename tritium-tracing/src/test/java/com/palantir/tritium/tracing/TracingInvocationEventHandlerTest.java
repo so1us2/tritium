@@ -47,7 +47,7 @@ import org.slf4j.MDC;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("NullAway") // mock injection
-public class TracingInvocationEventHandlerTest {
+final class TracingInvocationEventHandlerTest {
 
     private InvocationEventHandler<InvocationContext> handler;
     private TestInterface instance;
@@ -59,7 +59,7 @@ public class TracingInvocationEventHandlerTest {
     private SpanObserver mockSpanObserver;
 
     @BeforeEach
-    public void before() throws Exception {
+    void before() throws Exception {
         Tracer.getAndClearTrace();
         MDC.clear();
         executor = MoreExecutors.newDirectExecutorService();
@@ -76,7 +76,7 @@ public class TracingInvocationEventHandlerTest {
     }
 
     @AfterEach
-    public void after() {
+    void after() {
         Tracer.unsubscribe("sysout");
         Tracer.unsubscribe("mock");
         Tracer.unsubscribe("slf4j");
@@ -86,7 +86,7 @@ public class TracingInvocationEventHandlerTest {
     }
 
     @Test
-    public void testPreInvocation() {
+    void testPreInvocation() {
         long startNanoseconds = System.nanoTime();
 
         InvocationContext context = handler.preInvocation(instance, method, args);
@@ -100,7 +100,7 @@ public class TracingInvocationEventHandlerTest {
     }
 
     @Test
-    public void testSuccess() {
+    void testSuccess() {
         InvocationContext context = handler.preInvocation(instance, method, args);
 
         assertThat(MDC.get(Tracers.TRACE_ID_KEY)).isNotNull();
@@ -116,7 +116,7 @@ public class TracingInvocationEventHandlerTest {
     }
 
     @Test
-    public void testFailure() {
+    void testFailure() {
         InvocationContext context = handler.preInvocation(instance, method, args);
 
         assertThat(MDC.get(Tracers.TRACE_ID_KEY)).isNotNull();
@@ -132,27 +132,27 @@ public class TracingInvocationEventHandlerTest {
     }
 
     @Test
-    public void preInvocationWithoutSampling() {
+    void preInvocationWithoutSampling() {
         handler.preInvocation(instance, method, args);
         verifyNoMoreInteractions(mockSpanObserver);
     }
 
     @Test
-    public void onSuccessWithNullContextShouldNotThrow() {
+    void onSuccessWithNullContextShouldNotThrow() {
         handler.onSuccess(null, new Object());
 
         verifyNoMoreInteractions(mockSpanObserver);
     }
 
     @Test
-    public void onFailureWithNullContextShouldNotThrow() {
+    void onFailureWithNullContextShouldNotThrow() {
         handler.onFailure(null, new RuntimeException("expected"));
 
         verifyNoMoreInteractions(mockSpanObserver);
     }
 
     @Test
-    public void testSystemPropertySupplier_Handler_Enabled() {
+    void testSystemPropertySupplier_Handler_Enabled() {
         assertThat(TracingInvocationEventHandler.getEnabledSupplier("test").asBoolean()).isTrue();
     }
 

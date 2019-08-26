@@ -46,7 +46,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("NullAway") // mock injection
-public class InvocationEventProxyTest {
+final class InvocationEventProxyTest {
 
     private static final Object[] EMPTY_ARGS = {};
 
@@ -57,7 +57,7 @@ public class InvocationEventProxyTest {
 
     @Test
     @SuppressWarnings("checkstyle:illegalthrows")
-    public void testDisabled() throws Throwable {
+    void testDisabled() throws Throwable {
         InvocationEventProxy proxy = new InvocationEventProxy(
                 Collections.emptyList(), InstrumentationFilters.from((BooleanSupplier) () -> false)) {
             @Override
@@ -70,7 +70,7 @@ public class InvocationEventProxyTest {
 
     @Test
     @SuppressWarnings("checkstyle:illegalthrows")
-    public void testInstrumentPreInvocation() throws Throwable {
+    void testInstrumentPreInvocation() throws Throwable {
         InvocationEventHandler<InvocationContext> testHandler = new SimpleHandler();
         InvocationEventProxy proxy = createTestProxy(testHandler);
 
@@ -90,7 +90,7 @@ public class InvocationEventProxyTest {
 
     @Test
     @SuppressWarnings("checkstyle:illegalthrows")
-    public void testInstrumentPreInvocationThrows() throws Throwable {
+    void testInstrumentPreInvocationThrows() throws Throwable {
         InvocationEventHandler<InvocationContext> testHandler = new SimpleHandler() {
             @Override
             public InvocationContext preInvocation(
@@ -109,7 +109,7 @@ public class InvocationEventProxyTest {
 
     @Test
     @SuppressWarnings("checkstyle:illegalthrows")
-    public void testInstrumentOnSuccessThrows() throws Throwable {
+    void testInstrumentOnSuccessThrows() throws Throwable {
         InvocationEventHandler<InvocationContext> testHandler = new SimpleHandler() {
             @Override
             public void onSuccess(@Nullable InvocationContext _context, @Nullable Object _result) {
@@ -129,7 +129,7 @@ public class InvocationEventProxyTest {
 
     @Test
     @SuppressWarnings("checkstyle:illegalthrows")
-    public void testInstrumentOnFailureThrows() throws Throwable {
+    void testInstrumentOnFailureThrows() throws Throwable {
         InvocationEventHandler<InvocationContext> testHandler = new SimpleHandler() {
             @Override
             public void onSuccess(@Nullable InvocationContext _context, @Nullable Object _result) {
@@ -154,20 +154,20 @@ public class InvocationEventProxyTest {
     }
 
     @Test
-    public void testToInvocationDebugString() throws Exception {
+    void testToInvocationDebugString() throws Exception {
         Throwable cause = new RuntimeException("cause");
         InvocationEventProxy.logInvocationWarning("test", this, getStringLengthMethod(), cause);
     }
 
     @Test
-    public void testToInvocationContextDebugString() throws Exception {
+    void testToInvocationContextDebugString() throws Exception {
         Throwable cause = new RuntimeException("cause");
         InvocationContext context = DefaultInvocationContext.of("test", getStringLengthMethod(), EMPTY_ARGS);
         InvocationEventProxy.logInvocationWarning("test", context, 13, cause);
     }
 
     @Test
-    public void testInstrumentToString() {
+    void testInstrumentToString() {
         List<InvocationEventHandler<InvocationContext>> handlers = Collections.emptyList();
         InvocationEventProxy proxy = new InvocationEventProxy(handlers) {
             @Override
@@ -181,7 +181,7 @@ public class InvocationEventProxyTest {
 
     @Test
     @SuppressWarnings("checkstyle:illegalthrows")
-    public void testInstrumentInvocation() throws Throwable {
+    void testInstrumentInvocation() throws Throwable {
         InvocationEventProxy proxy = createTestProxy(new SimpleHandler());
 
         assertThat(proxy.invoke("test", getStringLengthMethod(), null)).isEqualTo("test".length());
@@ -193,7 +193,7 @@ public class InvocationEventProxyTest {
 
     @Test
     @SuppressWarnings("checkstyle:illegalthrows")
-    public void testInstrumentInvocationThrowsException() {
+    void testInstrumentInvocationThrowsException() {
         InvocationEventProxy proxy = createSimpleTestProxy();
 
         assertThatThrownBy(() -> proxy.invoke("test", getThrowsCheckedExceptionMethod(), null))
@@ -211,7 +211,7 @@ public class InvocationEventProxyTest {
 
     @Test
     @SuppressWarnings("checkstyle:illegalthrows")
-    public void testExecute() throws Throwable {
+    void testExecute() throws Throwable {
         InvocationEventProxy proxy = createTestProxy(new SimpleHandler());
 
         assertThat(proxy.invoke(proxy, getStringLengthMethod(), null)).isEqualTo("test".length());
@@ -223,7 +223,7 @@ public class InvocationEventProxyTest {
 
     @Test
     @SuppressWarnings("checkstyle:illegalthrows")
-    public void testExecuteThrowsExceptions() {
+    void testExecuteThrowsExceptions() {
         InvocationEventProxy proxy = createSimpleTestProxy();
 
         assertThatThrownBy(() -> proxy.invoke(proxy, getThrowsCheckedExceptionMethod(), null))
@@ -241,7 +241,7 @@ public class InvocationEventProxyTest {
 
     @Test
     @SuppressWarnings("checkstyle:illegalthrows")
-    public void testThrowingFilterAndHandler() throws Throwable {
+    void testThrowingFilterAndHandler() throws Throwable {
         doThrow(new IllegalStateException("test isEnabled"))
                 .when(mockHandler)
                 .isEnabled();
@@ -255,7 +255,7 @@ public class InvocationEventProxyTest {
 
     @Test
     @SuppressWarnings("checkstyle:illegalthrows")
-    public void testThrowingFilter() throws Throwable {
+    void testThrowingFilter() throws Throwable {
         doThrow(new UnsupportedOperationException("test shouldInstrument"))
                 .when(mockFilter)
                 .shouldInstrument(any(), any(), any());
@@ -270,7 +270,7 @@ public class InvocationEventProxyTest {
 
     @Test
     @SuppressWarnings("checkstyle:illegalthrows")
-    public void testThrowingHandler() throws Throwable {
+    void testThrowingHandler() throws Throwable {
         doThrow(new IllegalStateException("test isEnabled"))
                 .when(mockHandler)
                 .isEnabled();

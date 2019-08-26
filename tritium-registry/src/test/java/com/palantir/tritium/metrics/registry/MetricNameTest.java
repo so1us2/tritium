@@ -20,10 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class MetricNameTest {
+final class MetricNameTest {
 
     @Test
-    public void compareSame() {
+    void compareSame() {
         MetricName one = MetricName.builder()
                 .safeName("test")
                 .putSafeTags("key", "value")
@@ -44,7 +44,7 @@ public class MetricNameTest {
     }
 
     @Test
-    public void compareName() {
+    void compareName() {
         assertThat(MetricName.builder().safeName("a").build())
                 .isEqualTo(MetricName.builder().safeName("a").build());
 
@@ -53,7 +53,7 @@ public class MetricNameTest {
     }
 
     @Test
-    public void compareTagNames() {
+    void compareTagNames() {
         MetricName one = MetricName.builder()
                 .safeName("a")
                 .putSafeTags("key1", "value1")
@@ -70,7 +70,7 @@ public class MetricNameTest {
     }
 
     @Test
-    public void compareTagValues() {
+    void compareTagValues() {
         MetricName one = MetricName.builder()
                 .safeName("a")
                 .putSafeTags("key1", "value1")

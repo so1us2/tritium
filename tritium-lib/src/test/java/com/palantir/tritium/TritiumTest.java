@@ -44,7 +44,7 @@ import org.slf4j.impl.SimpleLogger;
 import org.slf4j.impl.TestLogs;
 
 @SuppressWarnings("NullAway")
-public class TritiumTest {
+final class TritiumTest {
     static {
         System.setProperty("org.slf4j.simpleLogger.log.performance", LoggingLevel.TRACE.name());
         TestLogs.setLevel("performance", LoggingLevel.TRACE.name());
@@ -70,12 +70,12 @@ public class TritiumTest {
     private String previousLogLevel = null;
 
     @BeforeEach
-    public void before() {
+    void before() {
         previousLogLevel = System.setProperty(LOG_KEY, LoggingLevel.TRACE.name());
     }
 
     @AfterEach
-    public void after() {
+    void after() {
         if (previousLogLevel == null) {
             System.clearProperty(LOG_KEY);
         } else {
@@ -89,7 +89,7 @@ public class TritiumTest {
     }
 
     @Test
-    public void testInstrument() {
+    void testInstrument() {
         assertThat(delegate.invocationCount()).isEqualTo(0);
         assertThat(metricRegistry.getTimers().get(Runnable.class.getName())).isNull();
 
@@ -111,7 +111,7 @@ public class TritiumTest {
     }
 
     @Test
-    public void testInstrumentWithTags() {
+    void testInstrumentWithTags() {
         assertThat(delegate.invocationCount()).isEqualTo(0);
         assertThat(taggedMetricRegistry.getMetrics())
                 // The global failures metric is created eagerly
@@ -136,14 +136,14 @@ public class TritiumTest {
     }
 
     @Test
-    public void rethrowOutOfMemoryError() {
+    void rethrowOutOfMemoryError() {
         assertThatThrownBy(instrumentedService::throwsOutOfMemoryError)
                 .isInstanceOf(OutOfMemoryError.class)
                 .hasMessage("Testing OOM");
     }
 
     @Test
-    public void rethrowOutOfMemoryErrorMetrics() {
+    void rethrowOutOfMemoryErrorMetrics() {
         String methodMetricName = MetricRegistry.name(TestInterface.class, "throwsOutOfMemoryError");
         assertThat(metricRegistry.meter(
                 MetricRegistry.name(methodMetricName, "failures"))
@@ -169,14 +169,14 @@ public class TritiumTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         assertThat(instrumentedService.toString()).isEqualTo(TestImplementation.class.getName());
         assertThat(Tritium.instrument(TestInterface.class, instrumentedService, metricRegistry).toString())
                 .isEqualTo(TestImplementation.class.getName());
     }
 
     @Test
-    public void testInaccessibleConstructor() throws NoSuchMethodException {
+    void testInaccessibleConstructor() throws NoSuchMethodException {
         Constructor<Tritium> constructor = Tritium.class.getDeclaredConstructor();
         assertThat(constructor.isAccessible()).isFalse();
         constructor.setAccessible(true);
