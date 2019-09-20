@@ -127,6 +127,8 @@ allprojects {
     })
 
     tasks.withType(Test) {
+        systemProperty 'junit.jupiter.execution.parallel.enabled', 'true'
+
         useJUnitPlatform {
             includeEngines 'jqwik'
         }
